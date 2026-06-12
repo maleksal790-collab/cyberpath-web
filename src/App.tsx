@@ -1,4 +1,5 @@
 import { Route, Switch } from "wouter";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import LearningPathsPage from "./pages/LearningPathsPage";
@@ -13,6 +14,7 @@ export default function App() {
         <Route path="/learning-path/:pathId" component={LearningPathDetailPage} />
         <Route>404: Page Not Found</Route>
       </Switch>
+      <SpeedInsights />
     </Layout>
   );
 }
