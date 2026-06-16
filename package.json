@@ -1,12 +1,23 @@
 {
-  "name": "cyberpath-web",
+  "name": "cyberpath-repaired",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
+  "description": "CyberPath repaired Vite application with governed software delivery documentation and Vercel deployment alignment.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maleksal790-collab/cyberpath-web.git"
+  },
+  "engines": {
+    "node": ">=20.11.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "dev": "vite",
+    "typecheck": "tsc --noEmit",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "ci:verify": "npm run typecheck && npm run build"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
