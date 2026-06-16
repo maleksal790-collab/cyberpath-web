@@ -1,0 +1,8 @@
+# Default ownership for CyberPath Repaired repository governance.
+* @maleksal790-collab
+
+# Delivery and deployment controls.
+/.github/ @maleksal790-collab
+/vercel.json @maleksal790-collab
+/package.json @maleksal790-collab
+/docs/ @maleksal790-collab
