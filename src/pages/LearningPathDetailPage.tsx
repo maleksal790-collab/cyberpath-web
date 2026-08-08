@@ -1,10 +1,11 @@
 import { useParams, Link } from "wouter";
 import { learningPaths } from "@/data/roadmapData";
 import { useProgress } from "@/hooks/useProgress";
+import posthog from "@/posthog";
 import { ArrowLeft, Clock } from "lucide-react";
 
 export default function LearningPathDetailPage() {
-  const [params] = useParams();
+  const params = useParams();
   const pathId = params?.pathId;
   const { completedTopics, toggleComplete } = useProgress();
 
@@ -13,6 +14,16 @@ export default function LearningPathDetailPage() {
 
   const completedCount = path.steps.filter(s => s.type === 'topic' && completedTopics.includes(s.id)).length;
   const progress = Math.round((completedCount / path.steps.length) * 100);
+
+  const handleTopicCompletion = (topicId: string, isCompleted: boolean) => {
+    posthog.capture(isCompleted ? "topic_marked_incomplete" : "topic_marked_complete", {
+      learning_path_id: path.id,
+      topic_id: topicId,
+      completion_count: isCompleted ? completedCount - 1 : completedCount + 1,
+      total_steps: path.steps.length,
+    });
+    toggleComplete(topicId);
+  };
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -49,7 +60,7 @@ export default function LearningPathDetailPage() {
               </div>
 
               {step.type === 'topic' && (
-                <button onClick={() => toggleComplete(step.id)} className={`px-5 py-2 rounded-xl text-sm font-medium transition-colors ${isCompleted ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-blue-600 text-white hover:bg-blue-700'}`}>
+                <button onClick={() => handleTopicCompletion(step.id, isCompleted)} className={`px-5 py-2 rounded-xl text-sm font-medium transition-colors ${isCompleted ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-blue-600 text-white hover:bg-blue-700'}`}>
                   {isCompleted ? 'Completed' : 'Mark Complete'}
                 </button>
               )}
