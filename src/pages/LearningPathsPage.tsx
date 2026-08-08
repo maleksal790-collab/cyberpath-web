@@ -28,18 +28,19 @@ export default function LearningPathsPage() {
           const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
 
           return (
-            <Link key={path.id} href={`/learning-path/${path.id}`}>
-              <div
-                className="group bg-white border hover:border-blue-500 rounded-3xl p-8 transition-all hover:shadow-xl h-full flex flex-col cursor-pointer"
-                onClick={() =>
-                  posthog.capture("learning_path_opened", {
-                    learning_path_id: path.id,
-                    difficulty: path.difficulty,
-                    estimated_hours: path.estimatedHours,
-                    progress_percent: progress,
-                  })
-                }
-              >
+            <Link
+              key={path.id}
+              href={`/learning-path/${path.id}`}
+              onClick={() =>
+                posthog.capture("learning_path_opened", {
+                  learning_path_id: path.id,
+                  difficulty: path.difficulty,
+                  estimated_hours: path.estimatedHours,
+                  progress_percent: progress,
+                })
+              }
+            >
+              <div className="group bg-white border hover:border-blue-500 rounded-3xl p-8 transition-all hover:shadow-xl h-full flex flex-col cursor-pointer">
                 <div className="flex justify-between mb-6">
                   <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center text-blue-600">
                     {iconMap[path.icon] || <Shield className="w-8 h-8" />}
